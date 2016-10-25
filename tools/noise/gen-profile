@@ -180,10 +180,10 @@ EOF
 	echo "--> Fitted parametric curves"
 	flat_dat="${pfm%.pfm}_flat.dat"
 	curves_dat="${pfm%.pfm}_curves.dat"
-	$noiseprofile $pfm -c $(cat $fit) > $flat_dat 2> $curves_dat
+	"$noiseprofile" "$pfm" -c $(cat $fit) > $flat_dat 2> $curves_dat
 
 	# Data based histogram inversion:
-	# $noiseprofile $pfm -h $dat > $flat_dat 2> $curves_dat
+	# "$noiseprofile" "$pfm" -h "$dat" > $flat_dat 2> $curves_dat
 	echo "--> Flattened $pfm"
 	flat_pdf="${pfm%.pfm}_flat.pdf"
 	gnuplot 2>/dev/null << EOF
@@ -225,7 +225,7 @@ Possible reason:
 If the latter reason applies to you, change it back to "image settings"
 and re-run this script.${color_reset}
 EOF
-		rm -f $dat $flat_dat $curves_dat $fit "$pfm"
+		rm -f "$dat" $flat_dat $curves_dat $fit "$pfm"
 		return 1
 		;;
 	esac
@@ -275,7 +275,7 @@ EOF
 	printf "$maker\t$model\t$model iso $iso\t$iso\t$a0, $a1, $a2\t$b0, $b1, $b2\n" >> "$presets"
 
 	# Clean unused files.
-	rm -f $dat $flat_dat $curves_dat $fit
+	rm -f "$dat" $flat_dat $curves_dat $fit
 	if [ "$keep_pfms" != "1" ]; then
 		rm -f "$pfm"
 	fi
